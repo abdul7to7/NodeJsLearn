@@ -1,29 +1,25 @@
-const handler = require("./routes");
-
 const express = require("express");
 
 const bodyParser = require("body-parser");
 
 const app = express();
 
+const adminRoutes = require("./routes/adminRoutes");
+const shopRoutes = require("./routes/shopRoutes");
 // Handle favicon request
 // app.get("/favicon.ico", (req, res) => res.status(204).end());
 
+app.get("/", (req, res) => {
+  res.send("<h1>Home page</h1>");
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/add-product", (req, res, next) => {
-  res.send(
-    "<body><form action='/products' method='POST'><input type='text' name='title'/><input type='text' name='size'/><button type='submit'>Submit</button></form></body>"
-  );
-});
-
-app.post("/products", (req, res, next) => {
-  console.log(req.body);
-  res.redirect("/");
-});
+app.use("/admin", adminRoutes);
+app.use("/shop", shopRoutes);
 
 app.use((req, res, next) => {
-  res.send("<h1>Home Page</h1>");
+  res.status(404).send("<h1>404 Page Not Found</h1>");
 });
 
 app.listen(4000);
