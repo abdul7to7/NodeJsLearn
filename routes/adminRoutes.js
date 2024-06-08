@@ -1,10 +1,12 @@
 const router = require("express").Router();
+const path=require('path');
+const rootDir=require('../util/rootPath');
 
 //admin/add-product => GET
 router.get("/add-product", (req, res, next) => {
-  res.send(
-    "<body><form action='/admin/add-product' method='POST'><input type='text' name='title'/><input type='text' name='size'/><button type='submit'>Submit</button></form></body>"
-  );
+  // res.sendFile(path.join(__dirname,'..','views','add-product.html'))
+  //we can use above method also but this is used for all types of os
+  res.sendFile(path.join(rootDir,'views','add-product.html'))
 });
 
 //admin/add-product => POST
